@@ -3,13 +3,14 @@
 Flask API for managing a zoo.  
 This API will allow zookeeper to efficiently manage various aspects of the zoo, such as animal information, enclosures, feeding schedules, and more
 
-
 ## Component  
 
-### Animal Management    
-Add, update, or delete information about animals in the zoo. 
+### Animal Management   
 
-#### Details
+Add, update, or delete information about animals in the zoo.  
+
+#### Details  
+
 - Id  
 - Name
 - Species 
