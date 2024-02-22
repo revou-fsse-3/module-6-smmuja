@@ -35,7 +35,7 @@ def create_employee():
         print(data)
 
         employee = Employee()
-        employee.id = data['id']
+        # employee.id = data['id']
         employee.name = data['name']
         employee.email = data['email']
         employee.phone = data['phone']
@@ -44,7 +44,8 @@ def create_employee():
         db.session.add(employee)
         db.session.commit()
         
-        return 'Employee created', 201
+        # return 'Employee created', 201
+        return employee.as_dict(), 201
     except Exception as e:
         return e, 500
 
@@ -59,7 +60,7 @@ def update_employee(employee_id):
         data = request.json
 
         employee = Employee()
-        employee.id = data['id']
+        # employee.id = data['id']
         employee.name = data['name']
         employee.email = data['email']
         employee.phone = data['phone']
@@ -69,12 +70,13 @@ def update_employee(employee_id):
         db.session.commit()
     
         
-        return 'Update successful', 200
+        # return 'Update successful', 200
+        return employee.as_dict(), 200
     except Exception as e:
         return e, 500
 
 @employee_blueprint.route('/<int:employee_id>', methods=['DELETE'])
-def update_employee(employee_id):
+def delete_employee(employee_id):
     try:
 
         employee = Employee.query.get(employee_id)
@@ -84,7 +86,7 @@ def update_employee(employee_id):
         data = request.json
 
         employee = Employee()
-        employee.id = data['id']
+        # employee.id = data['id']
         employee.name = data['name']
         employee.email = data['email']
         employee.phone = data['phone']
@@ -94,6 +96,7 @@ def update_employee(employee_id):
         db.session.commit()
     
         
-        return 'Update successful', 200
+        # return 'Update successful', 200
+        return employee, 200
     except Exception as e:
         return e, 500

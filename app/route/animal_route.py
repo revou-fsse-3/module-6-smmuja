@@ -35,20 +35,21 @@ def create_animal():
         print(data)
 
         animal = Animal()
-        animal.id = data['id']
+        # animal.id = data['id']
         animal.name = data['name']
-        animal.species = data['name']
-        animal.binomial_name = data['binomial name']
+        animal.species = data['species']
+        # animal.binomial_name = data['binomial name']
         animal.age = data['age']
         animal.gender = data['gender']
-        animal.food = data['diet']
+        animal.food = data['food']
         animal.diet_category = data['diet category']
-        animal.animal_class = data['animal class']
+        # animal.animal_class = data['animal class']
         
         db.session.add(animal)
         db.session.commit()
         
-        return 'success', 200
+        # return 'success', 201
+        return animal.as_dict(), 201
     except Exception as e:
         return e, 500
 @animal_blueprint.route('/', methods=['PUT'])
@@ -58,20 +59,20 @@ def update_animal():
         print(data)
 
         animal = Animal()
-        animal.id = data['id']
+        # animal.id = data['id']
         animal.name = data['name']
-        animal.species = data['name']
-        animal.binomial_name = data['binomial name']
+        animal.species = data['species']
+        # animal.binomial_name = data['binomial name']
         animal.age = data['age']
         animal.gender = data['gender']
-        animal.food = data['diet']
+        animal.food = data['food']
         animal.diet_category = data['diet category']
-        animal.animal_class = data['animal class']
+        # animal.animal_class = data['animal class']
         
-        db.session.add(animal)
+        # db.session.add(animal)
         db.session.commit()
         
-        return 'success', 200
+        return animal.as_dict(), 200
     except Exception as e:
         return e, 500
     
@@ -82,15 +83,15 @@ def delete_animal():
         print(data)
 
         animal = Animal()
-        animal.id = data['id']
+        # animal.id = data['id']
         animal.name = data['name']
-        animal.species = data['name']
-        animal.binomial_name = data['binomial name']
+        animal.species = data['species']
+        # animal.binomial_name = data['binomial name']
         animal.age = data['age']
         animal.gender = data['gender']
-        animal.food = data['diet']
+        animal.food = data['food']
         animal.diet_category = data['diet category']
-        animal.animal_class = data['animal class']
+        # animal.animal_class = data['animal class']
         
         db.session.delete(animal)
         db.session.commit()
