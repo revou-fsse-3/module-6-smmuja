@@ -22,5 +22,12 @@ class Animal_repo():
 
 
     def search_animal(self, name):
-        animals = Animal.query.filter(Animal.name.like(f'%{name}')).all()
+        animals = Animal.query.filter(Animal.name.like(f'%{name}%')).all()
         return animals
+    
+    def delete_animal(self, id):
+        animal_obj = Animal.query.get(id)
+
+        db.session.delete(animal_obj)
+        db.session.commit()
+        return animal_obj

@@ -5,7 +5,6 @@ from app.models.animal import Animal
 from app.utils.api_response import api_response
 from app.service.animal_service import Animal_service
 from app.controller.animal.schema.update_animal import Update_animal_request
-from pydantic import ValidationError
 
 animal_blueprint = Blueprint('animal_endpoint', __name__)
 
@@ -36,12 +35,17 @@ def search_animal():
         # animals = Animal.query.all()
         animals = animal_service.search_animal(request_data['name'])
 
+        # if not animal_service:
+        #     return "Animal not found", 404
+
         # return [animal.as_dict() for animal in animals], 200
         return api_response(
             status_code=200, 
             message='' ,
             data=animals
         )
+    
+        
     except Exception as e:
         return str(e), 500
     
@@ -74,7 +78,7 @@ def create_animal():
         animal.gender = data['gender']
         animal.food = data['food']
         animal.diet_category = data['diet category']
-        # animal.animal_class = data['animal class']
+        animal.animal_class = data['animal class']
         
         db.session.add(animal)
         db.session.commit()
@@ -98,18 +102,8 @@ def update_animal(animal_id):
         # print(data)
 
         animal = Animal()
-        # # # animal.id = data['id']
-        # animal.name= update_animal_request.name
-        # animal.species= update_animal_request.species
-        # animal.age= update_animal_request.age
-        # animal.gender= update_animal_request.gender
-        # animal.food= update_animal_request.food
-        # # animal.diet_category= update_animal_request.diet_category
-        # animal.animal_class= update_animal_request.animal_class
-        
-
-
-
+    
+        # animal.id = data.get('id', animal.id)
         animal.name = data.get('name', animal.name)
         animal.species = data.get('species', animal.species)
         # animal.binomial_name = data['binomial name']
@@ -131,12 +125,6 @@ def update_animal(animal_id):
             message='Updated' ,
             data=animals
         )
-    except ValidationError as e:
-        return api_response(
-            status_code=400, 
-            message=e.errors() ,
-            data={}
-        )
     except Exception as e:
         return api_response(
             status_code=500, 
@@ -147,36 +135,30 @@ def update_animal(animal_id):
 @animal_blueprint.route('/<int:animal_id>', methods=['DELETE'])
 def delete_animal(animal_id):
     try:
-        data = request.json
-        print(data)
+        animal_service = Animal_service()
+        is_deleted = animal_service.delete_animal(animal_id)
 
-        animal = Animal.query.get(animal_id)
-
-        animal.name = data.get('name', animal.name)
-        animal.species = data.get('species', animal.species)
-        # animal.binomial_name = data['binomial name']
-        animal.age = data.get('age', animal.age)
-        animal.gender = data.get('gender', animal.gender)
-        animal.food = data.get('food', animal.food)
-        animal.diet_category = data.get('diet category', animal.diet_category)
-        animal.animal_class = data.get('animal class', animal.animal_class)
-
-
-
-        # # animal.id = data['id']
-        # animal.name = data['name']
-        # animal.species = data['species']
-        # # animal.binomial_name = data['binomial name']
-        # animal.age = data['age']
-        # animal.gender = data['gender']
-        # animal.food = data['food']
-        # animal.diet_category = data['diet category']
-        # # animal.animal_class = data['animal class']
+        if is_deleted == 'Not found':
+            return api_response(
+                status_code=404,
+                message=is_deleted,
+                data='none'
+            )
         
-        db.session.delete(animal)
-        db.session.commit()
+        return api_response(
+            status_code=200,
+            message='Animal deleted',
+            data=is_deleted
+        )
+
         
-        return 'success', 200
+        # db.session.delete(animal)
+        # db.session.commit()
+        
     except Exception as e:
-        return str(e), 500
+        return api_response(
+            status_code=500,
+            message = str(e),
+            data={}
+        )
     

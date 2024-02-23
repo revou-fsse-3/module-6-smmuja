@@ -23,5 +23,4 @@ class Animal(db.Model):
                 'food': self.food,
                 'diet category': self.diet_category,
                 'animal class' : self.animal_class
-
                 }
