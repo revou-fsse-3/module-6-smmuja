@@ -14,10 +14,8 @@ animal_blueprint = Blueprint('animal_endpoint', __name__)
 def get_list_animal():
     try:
         animal_service = Animal_service()
-        # animals = Animal.query.all()
         animals = animal_service.get_animals()
 
-        # return [animal.as_dict() for animal in animals], 200
         return api_response(
             status_code=200, 
             message='' ,
