@@ -83,4 +83,9 @@ http://127.0.0.1:5000/animal/2
 ![Employee](src/assets/employee.png)  
 ![Employee ID](src/assets/employee-id.png)  
 
-Thanks for reading ~.^_^.~  
+## Run on local environment  
+
+```bash
+poetry run pytest --cov=app
+
+```
