@@ -1,5 +1,6 @@
 from flask import Flask
-from app.route import animal_route, employee_route
+from app.controller.animal import animal_route
+from app.controller.employee import employee_route
 import os
 from app.utils.database import db, migrate
 from app.models import animal, employee

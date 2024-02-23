@@ -17,8 +17,11 @@ class Animal(db.Model):
         return {'id' : self.id, 
                 'name': self.name, 
                 'species': self.species,
+                'binomial name' : self.binomial_name,
                 'age' : self.age,
                 'gender': self.gender,
                 'food': self.food,
-                'diet category': self.diet_category
+                'diet category': self.diet_category,
+                'animal class' : self.animal_class
+
                 }
